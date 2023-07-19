@@ -8,15 +8,37 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
+/**
+ * 国标GB2260
+ */
 public class GB2260 {
+    /**
+     * 修订版本号
+     */
     private final Revision revision;
+
+    /**
+     * 行政区数据
+     */
     private HashMap<String, String> data;
+
+    /**
+     * 行政区列表
+     */
     private ArrayList<Division> provinces;
 
+    /**
+     * 国标GB2260构造, 默认最新修订版 V2014
+     */
     public GB2260() {
         this(Revision.V2014);
     }
 
+    /**
+     * 构造指定版本的GB2260
+     *
+     * @param revision 修订版本
+     */
     public GB2260(Revision revision) {
         this.revision = revision;
         data = new HashMap<String, String>();
@@ -45,6 +67,12 @@ public class GB2260 {
         }
     }
 
+    /**
+     * 根据行政区代码获取行政区对象
+     *
+     * @param code 行政区代码
+     * @return 行政区对象
+     */
     public Division getDivision(String code) {
         if (code.length() != 6) {
             throw new InvalidCodeException("Invalid code");
@@ -77,15 +105,31 @@ public class GB2260 {
         return division;
     }
 
+    /**
+     * 获取修订版号码
+     *
+     * @return
+     */
     public Revision getRevision() {
         return revision;
     }
 
+    /**
+     * 获取全部省份列表
+     *
+     * @return
+     */
     public ArrayList<Division> getProvinces() {
         return provinces;
     }
 
-    public ArrayList<Division> getPrefectures(String code)  {
+    /**
+     * 根据省代码获取地级市列表
+     *
+     * @param code 省代码 XX0000
+     * @return 地级市列表
+     */
+    public ArrayList<Division> getPrefectures(String code) {
         ArrayList<Division> rv = new ArrayList<Division>();
 
         if (!Pattern.matches("^\\d{2}0{4}$", code)) {
@@ -110,7 +154,13 @@ public class GB2260 {
         return rv;
     }
 
-    public ArrayList<Division> getCounties(String code)  {
+    /**
+     * 根据地级市代码获取区县列表
+     *
+     * @param code 地级市代码
+     * @return 区县列表
+     */
+    public ArrayList<Division> getCounties(String code) {
         ArrayList<Division> rv = new ArrayList<Division>();
 
         if (!Pattern.matches("^\\d+[1-9]0{2,3}$", code)) {

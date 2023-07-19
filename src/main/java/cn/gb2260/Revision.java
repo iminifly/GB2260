@@ -1,5 +1,8 @@
 package cn.gb2260;
 
+/**
+ * 修订版本
+ */
 public enum Revision {
     V2014("2014"),
     V2013("2013"),
@@ -19,6 +22,9 @@ public enum Revision {
     V200306("200306"),
     V2002("2002");
 
+    /**
+     * 修订版本号
+     */
     private final String code;
 
     Revision(String code) {

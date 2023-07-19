@@ -1,10 +1,33 @@
 package cn.gb2260;
 
+/**
+ * 行政区信息
+ */
 public class Division {
+
+    /**
+     * 行政区名称
+     */
     private String name;
+
+    /**
+     * 行政区代码
+     */
     private String code;
+
+    /**
+     * 修订版本号
+     */
     private String revision;
+
+    /**
+     * 省
+     */
     private String province;
+
+    /**
+     * 市
+     */
     private String prefecture;
 
     public String getName() {
