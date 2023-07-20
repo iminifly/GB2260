@@ -31,7 +31,7 @@ public class GB2260 {
      * 国标GB2260构造, 默认最新修订版 V2014
      */
     public GB2260() {
-        this(Revision.V2014);
+        this(Revision.V201809);
     }
 
     /**

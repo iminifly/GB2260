@@ -26,7 +26,7 @@ public class GB2260GetTest {
         Division data = gb2260.getDivision("110000");
         assertEquals("北京市", data.getName());
         assertEquals("北京市", data.toString());
-        assertEquals(Revision.V2014.getCode(), data.getRevision());
+        assertEquals(Revision.V201809.getCode(), data.getRevision());
         assertEquals("110000", data.getCode());
     }
 
