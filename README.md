@@ -15,7 +15,7 @@ Install with maven:
 
     $ git submodule update --init
     $ mvn clean package
-    $ mvn install:install-file -Dfile=target/GB2260-0.1.1.jar -DgroupId=cn.gb2260 -DartifactId=GB2260 -Dversion=0.1.1 -Dpackaging=jar
+    $ mvn install:install-file -Dfile=target/GB2260-0.1.4.jar -DgroupId=io.github.iminfly -DartifactId=GB2260 -Dversion=0.1.4 -Dpackaging=jar
 
 Update the pom.xml file in project
 
@@ -23,9 +23,9 @@ Update the pom.xml file in project
 <dependencies>
     ...
     <dependency>
-        <groupId>cn.gb2260</groupId>
+        <groupId>io.github.iminfly</groupId>
         <artifactId>GB2260</artifactId>
-        <version>0.1.1</version>
+        <version>0.1.4</version>
     </dependency>
     ...
 </dependencies>
