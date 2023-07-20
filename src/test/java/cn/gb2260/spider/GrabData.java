@@ -2,10 +2,7 @@ package cn.gb2260.spider;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Console;
-import cn.hutool.core.text.csv.CsvData;
-import cn.hutool.core.text.csv.CsvReader;
-import cn.hutool.core.text.csv.CsvRow;
-import cn.hutool.core.text.csv.CsvUtil;
+import cn.hutool.core.text.csv.*;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpRequest;
@@ -18,10 +15,8 @@ import org.junit.Test;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * 爬取数据
@@ -140,5 +135,45 @@ public class GrabData {
             lines.add(xzqCode.substring(0, 6) + "\t" + xzqName);
         }
         FileUtil.writeLines(lines, txt, StandardCharsets.UTF_8);
+    }
+
+    @Test
+    public void genShan1xi() {
+        // csv来源 https://github.com/xiangyuecn/AreaCity-JsSpider-StatsGov
+        String csv = "D:/ok_geo.csv";
+        String txt = "D:/shanxi.json";
+        String shan1xiPrefix = "140000";
+        String regex = "14\\d{2}00";
+
+        CsvReader reader = CsvUtil.getReader(FileUtil.getReader(FileUtil.file(csv), StandardCharsets.UTF_8), null);
+        reader.setContainsHeader(true);
+
+        // 存储指定的信息
+        List<LinkedHashMap<String, String>> lm = new ArrayList<>();
+
+        // 按行读取
+        Iterator<CsvRow> iterator = reader.stream().iterator();
+        while (iterator.hasNext()) {
+            CsvRow csvRow = iterator.next();
+            String code = csvRow.get(0);
+            if (!NumberUtil.isInteger(code)) {
+                continue;
+            }
+            if (code.length() < 6) {
+                code = StrUtil.fill(code, '0', 6, false);
+            }
+            if (!Pattern.matches(regex, code) || code.endsWith("0000")) {
+                continue;
+            }
+            String name = csvRow.get(3);
+            String geom = csvRow.get(6);
+
+            LinkedHashMap<String, String> m = new LinkedHashMap<>();
+            m.put("code", code);
+            m.put("name", name);
+            m.put("geom", "POLYGON ((" + geom + "))");
+            lm.add(m);
+        }
+        FileUtil.writeUtf8String(JSONUtil.toJsonPrettyStr(lm), txt);
     }
 }
