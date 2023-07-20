@@ -28,10 +28,10 @@ public class GB2260 {
     private ArrayList<Division> provinces;
 
     /**
-     * 国标GB2260构造, 默认最新修订版 V2014
+     * 国标GB2260构造, 默认最新修订版 V202306
      */
     public GB2260() {
-        this(Revision.V201809);
+        this(Revision.V202306);
     }
 
     /**

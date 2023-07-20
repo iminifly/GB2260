@@ -1,6 +1,11 @@
 package cn.gb2260.spider;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.lang.Console;
+import cn.hutool.core.text.csv.CsvData;
+import cn.hutool.core.text.csv.CsvReader;
+import cn.hutool.core.text.csv.CsvRow;
+import cn.hutool.core.text.csv.CsvUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpRequest;
@@ -11,7 +16,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.Test;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -109,4 +118,27 @@ public class GrabData {
         System.out.println(JSONUtil.toJsonPrettyStr(xzqMap));
     }
 
+    @Test
+    public void readCSV() {
+        // csv来源 https://github.com/xiangyuecn/AreaCity-JsSpider-StatsGov
+        String csv = "D:/ok_data_level3.csv";
+        String txt = "D:/202306.txt";
+        CsvReader reader = CsvUtil.getReader();
+        reader.setContainsHeader(true);
+        //从文件中读取CSV数据
+        CsvData data = reader.read(FileUtil.file(csv));
+        List<CsvRow> rows = data.getRows();
+        //遍历行
+        List<String> lines = new ArrayList<>();
+        for (CsvRow csvRow : rows) {
+            Console.log(csvRow.getRawList());
+            String xzqCode = csvRow.getByName("ext_id");
+            String xzqName = csvRow.getByName("ext_name");
+            if (xzqCode.length() < 6) {
+                continue;
+            }
+            lines.add(xzqCode.substring(0, 6) + "\t" + xzqName);
+        }
+        FileUtil.writeLines(lines, txt, StandardCharsets.UTF_8);
+    }
 }
