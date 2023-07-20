@@ -133,11 +133,13 @@ public class GB2260 {
         ArrayList<Division> rv = new ArrayList<Division>();
 
         if (!Pattern.matches("^\\d{2}0{4}$", code)) {
-            throw new InvalidCodeException("Invalid province code");
+//            throw new InvalidCodeException("Invalid province code");
+            return rv;
         }
 
         if (!data.containsKey(code)) {
-            throw new InvalidCodeException("Province code not found");
+//            throw new InvalidCodeException("Province code not found");
+            return rv;
         }
 
         Division province = getDivision(code);
@@ -164,11 +166,13 @@ public class GB2260 {
         ArrayList<Division> rv = new ArrayList<Division>();
 
         if (!Pattern.matches("^\\d+[1-9]0{2,3}$", code)) {
-            throw new InvalidCodeException("Invalid prefecture code");
+//            throw new InvalidCodeException("Invalid prefecture code");
+            return rv;
         }
 
         if (!data.containsKey(code)) {
-            throw new InvalidCodeException("Prefecture code not found");
+//            throw new InvalidCodeException("Prefecture code not found");
+            return rv;
         }
 
         Division prefecture = getDivision(code);
